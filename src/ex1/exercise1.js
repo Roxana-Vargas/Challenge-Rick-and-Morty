@@ -1,4 +1,4 @@
-import countCharacter from './utils/counCharacters';
+import fetchPageAndCountChar from './fetchPageAndCountChar';
 
 const resources = {
   locationUrl : 'https://rickandmortyapi.com/api/location',
@@ -9,19 +9,19 @@ const resources = {
 const getExercise1Result = async () => {
   const start = window.performance.now();
 
-  const countedL = await countCharacter(resources.locationUrl, 'l');
-  const countedE = await countCharacter(resources.episodeUrl, 'e');
-  const countedC = await countCharacter(resources.characterUrl, 'c');
+  const countedL = await fetchPageAndCountChar(resources.locationUrl, 'l');
+  const countedE = await fetchPageAndCountChar(resources.episodeUrl, 'e');
+  const countedC = await fetchPageAndCountChar(resources.characterUrl, 'c');
 
   const end = window.performance.now();
   const duration = (end-start);
   const seconds = Math.floor(duration/1000);
   const milliseconds = duration - 1000*seconds;
   
-  return [{
+  return {
     exercise_name: "Char counter",
     time: `${seconds}s ${milliseconds}ms`,
-    in_time: true,
+    in_time: seconds < 3,
     results: [
       {
         char: "l",
@@ -39,7 +39,7 @@ const getExercise1Result = async () => {
         resource: "character"
       }
     ]
-  }];
+  };
 }
 
 export default getExercise1Result

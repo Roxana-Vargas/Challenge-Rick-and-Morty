@@ -1,24 +1,30 @@
 import React, { useEffect, useState } from 'react';
 
-import getExercise1Result from './Exercise1';
+import getExercise1Result from './ex1/exercise1';
+
+import getExercise2Result from './ex2/exercise2';
 
 const Chipax = () => {
 
-  const [exercise1Result, setExerciseResult1] = useState([]);
+  const [finalResult, setFinalResult] = useState([]);
 
-  const countCharacterInAllResources = async () => {
-    setExerciseResult1(await getExercise1Result());
+  const calcResult = async () => {
+    const result1 = await getExercise1Result();
+    const result2 = await getExercise2Result();
+    
+    setFinalResult([
+      result1, result2
+    ])
   }
   
-  
   useEffect(() => {
-    countCharacterInAllResources();
+    calcResult()  
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   return ( 
     <div> 
-      <pre style={{color: 'green'}}>{JSON.stringify(exercise1Result, null, 2)}</pre>
+      <pre style={{color: 'green'}}>{JSON.stringify(finalResult, null, 2)}</pre>
     </div> )
 }
 

@@ -2,9 +2,9 @@
  * Async function to get the number of occurrences of the character {@character}. 
  */
 
-import countCharInResourcePage from "./count";
+import countCharInResourcePage from "./countCharInResourcePage";
 
-const countCharacter = async (url, character, counted=0) => {
+const fetchPageAndCountChar = async (url, character, counted=0) => {
      
     const response = await fetch(url)
        .then(response => response.json());
@@ -14,10 +14,10 @@ const countCharacter = async (url, character, counted=0) => {
     counted += countedCharacters;
  
     if (response.info.next) {
-         return await countCharacter(response.info.next, character, counted); 
+        return await fetchPageAndCountChar(response.info.next, character, counted); 
     }
   
     return counted;
 }
  
-export default countCharacter
+export default fetchPageAndCountChar
